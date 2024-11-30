@@ -1,0 +1,6 @@
+2024-11-30 12:48:46,118 - INFO - Successfully initialized Kubernetes configuration
+2024-11-30 12:48:51,247 - INFO - Successfully initialized Kubernetes configuration
+2024-11-30 12:49:11,071 - INFO - Received query: How many nodes are there in the cluster?
+2024-11-30 12:50:03,616 - INFO - Received query: What is the status of pod 'nginx-676b6c5bbc-kpftf'
+2024-11-30 12:50:03,795 - INFO - Received query: Which deployment spawned pod 'nginx-676b6c5bbc-kpftf'
+2024-11-30 12:50:03,871 - INFO - Received query: Show me all deployments
