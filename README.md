@@ -1,125 +1,78 @@
-<a name="readme-top" id="readme-top"></a>
+# Kubernetes Query Agent
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#query-examples">Query Examples</a></li>
-  </ol>
-</details>
+A natural language interface for querying Kubernetes cluster information.
 
-<!-- ABOUT THE PROJECT -->
 ## About The Project
 
-This project implements a Kubernetes Query Agent that can answer natural language queries about applications deployed on a Kubernetes cluster. The agent provides a simple REST API endpoint that accepts queries and returns information about pods, deployments, and cluster status.
+This agent provides a simple way to query Kubernetes cluster information using natural language. It handles queries about nodes, pods, and deployments, returning clear, concise responses.
 
-### Built With
+## Technical Implementation
 
-* ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-* ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=FastAPI&logoColor=white)
-* ![Kubernetes](https://img.shields.io/badge/kubernetes-326ce5.svg?&style=for-the-badge&logo=kubernetes&logoColor=white)
+- Built using FastAPI and Python 3.10
+- Interfaces with Kubernetes using the official Python client
+- Handles queries through a RESTful API endpoint
+- Logging system for tracking queries and responses
+
+### Query Types Supported:
+1. Node count queries
+2. Pod status checks
+3. Deployment-Pod relationship queries
 
 ## Getting Started
 
 ### Prerequisites
-
 * Python 3.10
 * Minikube
-* kubectl
-* A running Kubernetes cluster (local or remote)
+* Kubernetes cluster (local or remote)
+* kubectl configured
 
 ### Installation
-
-1. Clone the repository
-```sh
+1. Clone the repository:
+```bash
 git clone https://github.com/ShahDev007/query-agent-sample.git
 ```
 
-2. Create and activate virtual environment
-```sh
+2. Create virtual environment:
+```bash
 python -m venv venv
 source venv/bin/activate  # On Linux/Mac
 .\venv\Scripts\activate   # On Windows
 ```
 
-3. Install required packages
-```sh
+3. Install dependencies:
+```bash
 pip install -r requirements.txt
 ```
 
-4. Start Minikube
-```sh
+### Running the Agent
+1. Start Minikube:
+```bash
 minikube start
 ```
 
-5. Start the server
-```sh
-uvicorn main:app --reload --host 0.0.0.0 --port 8080
+2. Start the server:
+```bash
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-## Usage
+## Usage Examples
 
-The agent accepts POST requests to `/query` endpoint with a JSON body containing your query:
+```bash
+# Query Examples:
+1. Node count:
+   Query: "How many nodes are there in the cluster?"
+   Response: "1"
 
-```json
-{
-    "query": "How many nodes are there in the cluster?"
-}
-```
+2. Pod status:
+   Query: "What is the status of pod 'nginx-pod'?"
+   Response: "Running"
 
-## Query Examples
-
-1. Check number of nodes:
-```powershell
-$body = @{
-    "query" = "How many nodes are there in the cluster?"
-} | ConvertTo-Json
-Invoke-RestMethod -Uri "http://localhost:8080/query" -Method Post -ContentType "application/json" -Body $body
-```
-Response:
-```
-There are 1 nodes in the cluster
+3. Deployment relationship:
+   Query: "Which pod is spawned by my-deployment?"
+   Response: "my-deployment-577d9fbfb9-jbwkj"
 ```
 
-2. Check pod status:
-```powershell
-$body = @{
-    "query" = "What is the status of pod 'nginx-676b6c5bbc-kpftf'"
-} | ConvertTo-Json
-Invoke-RestMethod -Uri "http://localhost:8080/query" -Method Post -ContentType "application/json" -Body $body
-```
-Response:
-```
-Pod 'nginx-676b6c5bbc-kpftf':
-Status: Running
-Deployment: nginx
-Namespace: default
-```
-
-3. Check deployment relationship:
-```powershell
-$body = @{
-    "query" = "Which deployment spawned pod 'nginx-676b6c5bbc-kpftf'"
-} | ConvertTo-Json
-Invoke-RestMethod -Uri "http://localhost:8080/query" -Method Post -ContentType "application/json" -Body $body
-```
-Response:
-```
-Pod 'nginx-676b6c5bbc-kpftf' was spawned by deployment 'nginx'
-```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+## Project Structure
+- `main.py`: Core application logic
+- `requirements.txt`: Project dependencies
+- `agent.log`: Query logging
