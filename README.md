@@ -46,7 +46,7 @@ This project implements a Kubernetes Query Agent that can answer natural languag
 
 1. Clone the repository
 ```sh
-git clone https://github.com/ShahDev007/query-agent-sample
+git clone https://github.com/ShahDev007/query-agent-sample.git
 ```
 
 2. Create and activate virtual environment
