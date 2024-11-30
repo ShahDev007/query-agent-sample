@@ -85,8 +85,8 @@ def process_query(query: str) -> str:
                     )
             return f"Pod '{pod_name}' not found"
 
-        # Deployment spawn queries - Fixed this section
-        elif "deployment" in query and "pod" in query:  # Simplified condition
+        # Deployment spawn queries
+        elif "deployment" in query and "pod" in query:  
             try:
                 pod_name = query.split("'")[1] if "'" in query else None
                 if not pod_name:
